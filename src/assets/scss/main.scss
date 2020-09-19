@@ -57,3 +57,19 @@ footer.footer {
     }
   }
 }
+
+.field.is-danger {
+  .hint {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: red;
+  }
+  select,
+  input,
+  textarea {
+    border-color: red;
+    &:hover {
+      border-color: red;
+    }
+  }
+}

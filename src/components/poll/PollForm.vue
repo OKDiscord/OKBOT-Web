@@ -84,7 +84,7 @@ export default Vue.extend({
     },
     addAnswerDisabled() {
       return this.answers.length === 10
-    },
+    }
   },
 })
 </script>

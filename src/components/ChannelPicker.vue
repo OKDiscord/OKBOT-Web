@@ -4,9 +4,11 @@
   </div>
 
   <div class="select is-dark" v-else>
-    <select>
-      <option>Vyberte channel</option>
-      <option v-for="(c, i) in channels" :key="i" @click="setChannel(c)">{{ c.name }}</option>
+    <select @change="change">
+      <option @click="setChannel(null)">Vyberte channel</option>
+      <option v-for="(c, i) in channels" :key="i" @click="setChannel(c)">{{
+        c.name
+      }}</option>
     </select>
   </div>
 </template>
@@ -27,19 +29,19 @@ export type ChannelsResponse = {
 // FIXME: remove @ts-ignore
 
 export default Vue.extend({
-  props: ["setChannel"],
+  props: ["setChannel", "change"],
   data() {
     return {
       toggled: false,
       channels: [] as Channel[],
-      error: false,
+      error: false
     }
   },
   async mounted() {
     try {
       const response = await this.$axios.request<ChannelsResponse>({
         url: "/channels",
-        method: "GET",
+        method: "GET"
       })
 
       // @ts-ignore
@@ -52,6 +54,6 @@ export default Vue.extend({
       // @ts-ignore
       this.error = true
     }
-  },
+  }
 })
 </script>
