@@ -5,7 +5,7 @@
       <input type="text" v-model="question" class="input is-medium" />
     </div>
 
-    <div class="field columns" style="margin-top: 30px !important">
+    <div class="field columns" style="margin-top: 30px !important;">
       <div class="column" v-if="answers.length >= 10">
         <p
           class="has-text-danger is-inline-block"
@@ -21,7 +21,7 @@
           :disabled="answers.length >= 10"
           :class="{
             'is-dark is-disabled': answers.length >= 10,
-            'is-info': answers.length < 10
+            'is-info': answers.length < 10,
           }"
         >
           + Přidat odpověď
@@ -31,12 +31,12 @@
 
     <div ref="answersContainer"></div>
 
-    <div class="field has-text-right" style="margin-top: 60px !important">
+    <div class="field has-text-right" style="margin-top: 60px !important;">
       <button
         class="button is-medium"
         :class="{
           'is-primary': !formLoading,
-          'is-dark is-loading': formLoading
+          'is-dark is-loading': formLoading,
         }"
         type="submit"
       >
@@ -52,12 +52,12 @@ import PollAnswer from "./PollAnswer.vue"
 
 export default Vue.extend({
   components: {
-    PollAnswer
+    PollAnswer,
   },
   data: () => ({
     question: "",
     answers: [] as string[],
-    formLoading: false
+    formLoading: false,
   }),
   mounted() {
     this.createField()
@@ -72,8 +72,8 @@ export default Vue.extend({
           url: "/poll",
           data: {
             question: this.question,
-            answers: this.answers
-          }
+            answers: this.answers,
+          },
         })
       } catch (e) {
         console.log("bitch")
@@ -90,8 +90,8 @@ export default Vue.extend({
       const field = new PollAnswerInstance({
         propsData: {
           setAnswer: (newTitle: any) =>
-            (this.answers[newAnswerId] = newTitle.target.value)
-        }
+            (this.answers[newAnswerId] = newTitle.target.value),
+        },
       })
       field.$mount()
 
@@ -100,7 +100,7 @@ export default Vue.extend({
     },
     addAnswerDisabled() {
       return this.answers.length === 10
-    }
-  }
+    },
+  },
 })
 </script>

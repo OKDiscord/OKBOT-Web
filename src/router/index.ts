@@ -1,3 +1,4 @@
+import store from "@/store"
 import Vue from "vue"
 import VueRouter, { RouteConfig, RouterMode } from "vue-router"
 
@@ -12,24 +13,29 @@ const routes: RouteConfig[] = [
     children: [
       {
         path: "/",
-        component: () => import("@/pages/index.vue")
+        component: () => import("@/pages/index.vue"),
       },
       {
         path: "/announce",
-        component: () => import("@/pages/announce.vue")
+        component: () => import("@/pages/announce.vue"),
       },
       {
         path: "/poll",
-        component: () => import("@/pages/poll.vue")
-      }
-    ]
-  }
+        component: () => import("@/pages/poll.vue"),
+      },
+    ],
+  },
 ]
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
+})
+
+router.beforeEach((to, from, next) => {
+  store.dispatch("clearFlash")
+  next()
 })
 
 export default router

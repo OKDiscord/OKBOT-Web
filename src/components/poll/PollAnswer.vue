@@ -6,8 +6,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue"
 export default Vue.extend({
-    props: ['setAnswer']
+  props: ["setAnswer"],
 })
 </script>

@@ -62,7 +62,7 @@ export default Vue.extend({
 
       el.classList.toggle("is-active")
       ;(this.$refs as LocalRefs).nav.classList.toggle("is-active")
-    }
-  }
+    },
+  },
 })
 </script>

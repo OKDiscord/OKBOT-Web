@@ -1,9 +1,7 @@
 <template>
   <form @submit.prevent="submit">
     <div class="field" v-if="formErrors.processing !== null">
-      <div class="notification is-danger">
-        {{ formErrors.processing }}
-      </div>
+      <div class="notification is-danger">{{ formErrors.processing }}</div>
     </div>
 
     <div class="field" :class="{ 'is-danger': formErrors.title !== null }">
@@ -33,13 +31,13 @@
       </p>
     </div>
 
-    <div class="field has-text-right" style="margin-top: 30px !important">
+    <div class="field has-text-right" style="margin-top: 30px !important;">
       <button
         class="button"
         @click.prevent="createField"
         :class="{
           'is-info': !formLoading,
-          'is-dark': formLoading || fetchError
+          'is-dark': formLoading || fetchError,
         }"
         :disabled="formLoading || fetchError"
       >
@@ -49,13 +47,13 @@
 
     <div ref="fieldsContainer"></div>
 
-    <div class="field has-text-right" style="margin-top: 60px !important">
+    <div class="field has-text-right" style="margin-top: 60px !important;">
       <button
         class="button is-medium"
         :class="{
           'is-primary': !formLoading && !fetchError,
           'is-dark': formLoading || fetchError,
-          'is-loading': formLoading
+          'is-loading': formLoading,
         }"
         :disabled="formLoading || fetchError"
         type="submit"
@@ -75,7 +73,7 @@ import { CombinedVueInstance } from "vue/types/vue"
 export default Vue.extend({
   components: {
     AnnounceField,
-    ChannelPicker
+    ChannelPicker,
   },
   data: () => ({
     title: "",
@@ -96,8 +94,8 @@ export default Vue.extend({
     formErrors: {
       title: null,
       channel: null,
-      processing: null
-    } as { [key: string]: string | null }
+      processing: null,
+    } as { [key: string]: string | null },
   }),
   mounted() {
     this.createField()
@@ -120,8 +118,8 @@ export default Vue.extend({
               el.element = undefined
               return el
             }),
-            channel: this.channel!.id
-          }
+            channel: this.channel!.id,
+          },
         })
       } catch (e) {
         console.log(e)
@@ -134,7 +132,7 @@ export default Vue.extend({
 
       this.fields.push({
         title: "",
-        value: ""
+        value: "",
       })
 
       const AnnounceFieldInstance = Vue.extend(AnnounceField)
@@ -145,8 +143,8 @@ export default Vue.extend({
             (this.fields[newFieldId].title = newTitle.target.value),
           setValue: (newValue: any) =>
             (this.fields[newFieldId].value = newValue.target.value),
-          disabled: this.formLoading || this.fetchError
-        }
+          disabled: this.formLoading || this.fetchError,
+        },
       })
       field.$mount()
 
@@ -156,6 +154,7 @@ export default Vue.extend({
       this.$refs.fieldsContainer.appendChild(field.$el)
     },
     setChannel(c: Channel | null) {
+      console.log("setChannel", c)
       this.formErrors.channel = c === null ? "Nebyl vybrán channel." : null
       this.channel = c
     },
@@ -166,6 +165,7 @@ export default Vue.extend({
       return isChannel && isTitle
     },
     validateChannel() {
+      console.log("validateChannel", this.channel)
       this.formErrors.channel = this.channel ? null : "Nebyl vybrán channel."
       return Boolean(this.channel)
     },
@@ -177,12 +177,12 @@ export default Vue.extend({
     },
     setSuccessFetch(val: boolean) {
       console.log("success", val)
-      this.fetchError = val
+      this.fetchError = !val
       for (const { element } of this.fields) {
         if (!element) continue
         element.$props.disabled = !val
       }
-    }
-  }
+    },
+  },
 })
 </script>

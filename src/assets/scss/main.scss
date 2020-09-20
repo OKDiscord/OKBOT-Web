@@ -12,6 +12,7 @@ $footer-background-color: #222;
 
 @import "~bulma/bulma.sass";
 @import "~bulma-tooltip/src/sass/index.sass";
+@import "vue-select/src/scss/vue-select.scss";
 
 .input {
   background: #222;
@@ -75,6 +76,37 @@ footer.footer {
     border-color: red;
     &:hover {
       border-color: red;
+    }
+  }
+}
+.vs--disabled {
+  background: #363636;
+  border-color: #363636;
+
+  .vs__dropdown-toggle,
+  .vs__search,
+  .vs__open-indicator {
+    background: #363636;
+    border-color: #363636;
+  }
+
+  .vs__open-indicator {
+    fill: #363636;
+  }
+}
+
+.v-select {
+  background: #222;
+  border-radius: 4px;
+  input,
+  .vs__selected {
+    color: #c1c1c1;
+  }
+  .vs__dropdown-menu {
+    background: #222;
+
+    li {
+      color: #c1c1c1 !important;
     }
   }
 }

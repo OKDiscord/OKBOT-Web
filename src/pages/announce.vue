@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container" style="margin-top: 4rem">
+    <div class="container" style="margin-top: 4rem;">
       <div class="div-wrapper">
         <h2 class="is-size-2 mb-6">Nové oznámení</h2>
         <AnnounceForm />

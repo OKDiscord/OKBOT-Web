@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="field-group" style="margin-top: 40px;margin-bottom: 40px">
+    <div class="field-group" style="margin-top: 40px; margin-bottom: 40px;">
       <div class="field">
         <label class="label">Titulek</label>
         <input
@@ -26,6 +26,6 @@
 <script lang="ts">
 import Vue from "vue"
 export default Vue.extend({
-  props: ["setTitle", "setValue", "disabled"]
+  props: ["setTitle", "setValue", "disabled"],
 })
 </script>

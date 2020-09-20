@@ -3,13 +3,43 @@ import Vuex, { GetterTree, ActionTree, MutationTree, Action } from "vuex"
 
 Vue.use(Vuex)
 
-const state = () => ({})
+export type FlashMessage = {
+  title: string
+  message: string
+  type: "danger" | "info" | "success" | "warning"
+}
 
-const getters: GetterTree<AppState, AppState> = {}
+const state = () => ({
+  flashMessages: [] as FlashMessage[],
+})
 
-const actions: ActionTree<AppState, AppState> = {}
+const getters: GetterTree<AppState, AppState> = {
+  getFlashMessages: state => state.flashMessages,
+}
 
-const mutations: MutationTree<AppState> = {}
+const actions: ActionTree<AppState, AppState> = {
+  flashMessage: ({ commit }, flash: FlashMessage) => {
+    commit("flash", flash)
+  },
+  flashOneMessage: ({ commit }, flash: FlashMessage) => {
+    commit("flashOnly", flash)
+  },
+  clearFlash: ({ commit }) => {
+    commit("clearFlash")
+  },
+}
+
+const mutations: MutationTree<AppState> = {
+  flash: (state, flash: FlashMessage) => {
+    return state.flashMessages.push(flash)
+  },
+  flashOnly: (state, flash: FlashMessage) => {
+    return (state.flashMessages = [flash])
+  },
+  clearFlash: state => {
+    return (state.flashMessages = [])
+  },
+}
 
 const modules = {}
 

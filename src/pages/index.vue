@@ -1,11 +1,15 @@
 <template>
   <div>
-    <div class="container" style="margin-top: 4rem">
+    <div class="container" style="margin-top: 4rem;">
       <div class="div-wrapper">
         <h3 class="is-size-3">Vítejte v administraci OKBOTa.</h3>
         <div class="form-group mt-6">
-          <router-link to="/announce" class="button is-primary mr-5">Nové oznámení</router-link>
-          <router-link to="/announce" class="button is-primary">Nové hlasování</router-link>
+          <router-link to="/announce" class="button is-primary mr-5"
+            >Nové oznámení</router-link
+          >
+          <router-link to="/announce" class="button is-primary"
+            >Nové hlasování</router-link
+          >
         </div>
       </div>
     </div>
