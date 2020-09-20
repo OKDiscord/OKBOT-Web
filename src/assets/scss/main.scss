@@ -26,6 +26,10 @@ $footer-background-color: #222;
   &.is-focused {
     border-color: #b23bf0;
   }
+  &:disabled {
+    background: #363636;
+    border-color: #363636;
+  }
 }
 textarea.input {
   min-height: 50px;

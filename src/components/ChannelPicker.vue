@@ -29,7 +29,7 @@ export type ChannelsResponse = {
 // FIXME: remove @ts-ignore
 
 export default Vue.extend({
-  props: ["setChannel", "change"],
+  props: ["setChannel", "change", "setSuccessFetch"],
   data: () => ({
     toggled: false,
     channels: [] as Channel[],
@@ -45,9 +45,11 @@ export default Vue.extend({
       if (!response.data.success) return (this.error = true)
 
       this.channels = response.data.channels
+      this.setSuccessFetch(true)
     } catch (e) {
       console.log(e)
       this.error = true
+      this.setSuccessFetch(false)
     }
   }
 })
