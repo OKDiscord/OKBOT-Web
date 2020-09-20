@@ -9,8 +9,13 @@
       <button
         class="button"
         @click.prevent="createField"
-        :class="{'is-dark is-disabled': answers.length === 10, 'is-info': answers.length !== 10}"
-      >+ Přidat odpověď</button>
+        :class="{
+          'is-dark is-disabled': answers.length === 10,
+          'is-info': answers.length !== 10
+        }"
+      >
+        + Přidat odpověď
+      </button>
     </div>
 
     <div ref="answersContainer"></div>
@@ -23,7 +28,9 @@
           'is-dark is-loading': formLoading
         }"
         type="submit"
-      >Odeslat</button>
+      >
+        Odeslat
+      </button>
     </div>
   </form>
 </template>
@@ -34,15 +41,13 @@ import PollAnswer from "./PollAnswer.vue"
 
 export default Vue.extend({
   components: {
-    PollAnswer,
+    PollAnswer
   },
-  data() {
-    return {
-      question: "",
-      answers: [] as string[],
-      formLoading: false,
-    }
-  },
+  data: () => ({
+    question: "",
+    answers: [] as string[],
+    formLoading: false
+  }),
   mounted() {
     this.createField()
   },
@@ -56,8 +61,8 @@ export default Vue.extend({
           url: "/poll",
           data: {
             question: this.question,
-            answers: this.answers,
-          },
+            answers: this.answers
+          }
         })
       } catch (e) {
         console.log("bitch")
@@ -74,8 +79,8 @@ export default Vue.extend({
       const field = new PollAnswerInstance({
         propsData: {
           setAnswer: (newTitle: any) =>
-            (this.answers[newAnswerId] = newTitle.target.value),
-        },
+            (this.answers[newAnswerId] = newTitle.target.value)
+        }
       })
       field.$mount()
 
@@ -85,6 +90,6 @@ export default Vue.extend({
     addAnswerDisabled() {
       return this.answers.length === 10
     }
-  },
+  }
 })
 </script>

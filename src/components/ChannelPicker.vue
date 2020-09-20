@@ -30,13 +30,11 @@ export type ChannelsResponse = {
 
 export default Vue.extend({
   props: ["setChannel", "change"],
-  data() {
-    return {
-      toggled: false,
-      channels: [] as Channel[],
-      error: false
-    }
-  },
+  data: () => ({
+    toggled: false,
+    channels: [] as Channel[],
+    error: false
+  }),
   async mounted() {
     try {
       const response = await this.$axios.request<ChannelsResponse>({
@@ -44,14 +42,11 @@ export default Vue.extend({
         method: "GET"
       })
 
-      // @ts-ignore
       if (!response.data.success) return (this.error = true)
 
-      // @ts-ignore
       this.channels = response.data.channels
     } catch (e) {
       console.log(e)
-      // @ts-ignore
       this.error = true
     }
   }

@@ -2,7 +2,7 @@
   <form @submit.prevent="submit">
     <div class="field" v-if="formErrors.processing !== null">
       <div class="notification is-danger">
-        {{ formErrors.processing }}    
+        {{ formErrors.processing }}
       </div>
     </div>
 
@@ -61,22 +61,20 @@ export default Vue.extend({
     AnnounceField,
     ChannelPicker
   },
-  data() {
-    return {
-      title: "",
-      fields: [] as {
-        title: string
-        value: string
-      }[],
-      channel: null as Channel | null,
-      formLoading: false,
-      formErrors: {
-        title: null,
-        channel: null,
-        processing: null
-      } as { [key: string]: string | null }
-    }
-  },
+  data: () => ({
+    title: "",
+    fields: [] as {
+      title: string
+      value: string
+    }[],
+    channel: null as Channel | null,
+    formLoading: false,
+    formErrors: {
+      title: null,
+      channel: null,
+      processing: null
+    } as { [key: string]: string | null }
+  }),
   mounted() {
     this.createField()
   },

@@ -10,8 +10,7 @@
           role="button"
           class="navbar-burger burger"
           aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
+          @click="borgar"
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -19,10 +18,17 @@
         </a>
       </div>
 
-      <div id="main-nav" class="navbar-menu">
+      <div id="main-nav" class="navbar-menu" ref="nav">
         <div class="navbar-start">
-          <router-link to="/announce" active-class="is-active" class="navbar-item">Nové oznámení</router-link>
-          <router-link to="/poll" active-class="is-active" class="navbar-item">Nové hlasování</router-link>
+          <router-link
+            to="/announce"
+            active-class="is-active"
+            class="navbar-item"
+            >Nové oznámení</router-link
+          >
+          <router-link to="/poll" active-class="is-active" class="navbar-item"
+            >Nové hlasování</router-link
+          >
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
@@ -35,3 +41,28 @@
     </div>
   </nav>
 </template>
+
+<script lang="ts">
+import Vue from "vue"
+
+export type ClickEvent = {
+  target: HTMLElement
+}
+
+export type LocalRefs = {
+  [key: string]: HTMLElement
+  nav: HTMLDivElement
+}
+
+export default Vue.extend({
+  methods: {
+    borgar(event: ClickEvent) {
+      const el = event.target
+      console.log(event)
+
+      el.classList.toggle("is-active")
+      ;(this.$refs as LocalRefs).nav.classList.toggle("is-active")
+    }
+  }
+})
+</script>
