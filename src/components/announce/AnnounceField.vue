@@ -5,7 +5,7 @@
         <label class="label">Titulek</label>
         <input
           type="text"
-          @keydown="setTitle"
+          @keyup="setTitle"
           class="input is-small"
           :disabled="disabled"
         />
@@ -14,7 +14,7 @@
         <label class="label">Text</label>
         <textarea
           type="text"
-          @keydown="setValue"
+          @keyup="setValue"
           class="input is-small"
           :disabled="disabled"
         />

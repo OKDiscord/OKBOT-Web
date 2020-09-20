@@ -85,7 +85,7 @@ export default Vue.extend({
         object,
         Record<never, any>
       >
-      title: string
+      name: string
       value: string
     }[],
     channel: null as Channel | null,
@@ -106,7 +106,7 @@ export default Vue.extend({
       if (!validate) return
 
       this.formLoading = true
-      this.fields.filter(el => el.title !== "" && el.value !== "") // filter out empty fields
+      this.fields = this.fields.filter(el => el.name !== "" && el.value !== "") // filter out empty fields
 
       try {
         const response = await this.$axios.request({
@@ -131,7 +131,7 @@ export default Vue.extend({
       const newFieldId = this.fields.length
 
       this.fields.push({
-        title: "",
+        name: "",
         value: "",
       })
 
@@ -140,9 +140,9 @@ export default Vue.extend({
       const field = new AnnounceFieldInstance({
         propsData: {
           setTitle: (newTitle: any) =>
-            (this.fields[newFieldId].title = newTitle.target.value),
+            {console.log(newTitle);(this.fields[newFieldId].name = newTitle.target.value)},
           setValue: (newValue: any) =>
-            (this.fields[newFieldId].value = newValue.target.value),
+            {console.log(newValue);(this.fields[newFieldId].value = newValue.target.value)},
           disabled: this.formLoading || this.fetchError,
         },
       })
