@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="margin-top: 40px; margin-bottom: 60px;">
+  <div>
     <FlashMessage v-for="(flash, i) in flashes" :flash="flash" :key="i" />
   </div>
 </template>

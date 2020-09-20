@@ -1,7 +1,9 @@
 <template>
   <div>
     <Header />
-    <FlashMessageWrapper />
+    <div class="container" style="margin-top: 40px; margin-bottom: 60px;">
+      <FlashMessageWrapper />
+    </div>
     <div style="min-height: calc(100vh - 4rem);">
       <router-view />
     </div>
