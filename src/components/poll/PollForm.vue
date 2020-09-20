@@ -5,17 +5,28 @@
       <input type="text" v-model="question" class="input is-medium" />
     </div>
 
-    <div class="field has-text-right" style="margin-top: 30px !important">
-      <button
-        class="button"
-        @click.prevent="createField"
-        :class="{
-          'is-dark is-disabled': answers.length === 10,
-          'is-info': answers.length !== 10
-        }"
-      >
-        + Přidat odpověď
-      </button>
+    <div class="field columns" style="margin-top: 30px !important">
+      <div class="column" v-if="answers.length >= 10">
+        <p
+          class="has-text-danger is-inline-block"
+          data-tooltip="Na Dicordu jsou jen emoty 1-10, proto je maximum 10."
+        >
+          Můžeš přidat jen 10 odpovědí.
+        </p>
+      </div>
+      <div class="column has-text-right">
+        <button
+          class="button"
+          @click.prevent="createField"
+          :disabled="answers.length >= 10"
+          :class="{
+            'is-dark is-disabled': answers.length >= 10,
+            'is-info': answers.length < 10
+          }"
+        >
+          + Přidat odpověď
+        </button>
+      </div>
     </div>
 
     <div ref="answersContainer"></div>
