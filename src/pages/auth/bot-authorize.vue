@@ -1,27 +1,29 @@
 <template>
   <div class="main__wrapper">
-    <div>
-      <FlashMessageWrapper />
-      <h1 class="is-size-1">OKBOT</h1>
-      <h2 class="is-size-5">Discord Bot</h2>
-      <button
-        class="button is-medium"
-        @click="login"
-        :class="{ 'is-primary': !loading, 'is-dark is-loading': loading }"
-        v-if="state === 'none'"
-      >
-        Přihlásit se přes Discord
-      </button>
+    <div class="login__container">
+      <div class="login__wrapper">
+        <FlashMessageWrapper />
+        <h1 class="is-size-1">OKBOT</h1>
+        <h2 class="is-size-5">Discord Bot</h2>
+        <button
+          class="button is-medium"
+          @click="login"
+          :class="{ 'is-primary': !loading, 'is-dark is-loading': loading }"
+          v-if="state === 'none'"
+        >
+          Přihlásit se přes Discord
+        </button>
 
-      <div v-else class="loader-wrapper">
-        <div class="loader" />
+        <div v-else class="loader__wrapper">
+          <div class="loader" />
+        </div>
+
+        <footer>
+          <strong>{{ new Date().getFullYear() }}</strong> &copy; Vottus, SIM7K;
+          <a href="https://github.com/OKDiscord">OKDiscord</a> &ndash; Všechna
+          práva vyhrazena.
+        </footer>
       </div>
-
-      <footer>
-        <strong>{{ new Date().getFullYear() }}</strong> &copy; Vottus, SIM7K;
-        <a href="https://github.com/OKDiscord">OKDiscord</a> &ndash; Všechna
-        práva vyhrazena.
-      </footer>
     </div>
   </div>
 </template>
@@ -32,42 +34,54 @@
   display: flex;
   height: 100vh;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   text-align: center;
+  background: url("../../assets/img/login-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
-  .loader-wrapper {
-    background: #222;
-    display: inline-block;
-    padding: 10px 10px 5px 10px;
-    border-radius: 8px;
-    margin-bottom: 0;
-
-    .loader {
-      display: inline-block;
-      font-size: 2rem;
+  .login__container {
+    @media (min-width: 960px) {
+      margin-right: 10rem;
     }
-  }
+    .login__wrapper {
+      background: rgba(0, 0, 0, 0.42);
+      padding: 2rem;
+      border-radius: 0.89rem;
 
-  & > div {
-    & > div {
-      margin-bottom: 30px;
-    }
-    h1 {
-      margin-bottom: 0;
-      line-height: 1;
-    }
+      .loader__wrapper {
+        background: #222;
+        display: inline-block;
+        padding: 10px 10px 5px 10px;
+        border-radius: 8px;
+        margin-bottom: 0;
 
-    h2 {
-      margin-bottom: 40px;
-    }
+        .loader {
+          display: inline-block;
+          font-size: 2rem;
+        }
+      }
+      & > div {
+        margin-bottom: 30px;
+      }
+      h1 {
+        margin-bottom: 0;
+        line-height: 1;
+      }
 
-    a {
-      color: #b23bf0;
-    }
+      h2 {
+        margin-bottom: 40px;
+      }
 
-    footer {
-      margin-top: 40px;
-      color: #c1c1c1;
+      a {
+        color: #b23bf0;
+      }
+
+      footer {
+        margin-top: 40px;
+        color: #c1c1c1;
+      }
     }
   }
 }

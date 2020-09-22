@@ -10,6 +10,10 @@ $footer-background-color: #222;
   width: 0;
 }
 
+html {
+  scrollbar-width: none;
+}
+
 @import "~bulma/bulma.sass";
 @import "~bulma-tooltip/src/sass/index.sass";
 @import "vue-select/src/scss/vue-select.scss";
