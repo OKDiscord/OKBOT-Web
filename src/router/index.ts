@@ -37,6 +37,10 @@ const routes: RouteConfig[] = [
       {
         path: "/login/discord",
         component: () => import("@/pages/auth/discord-login.vue")
+      },
+      {
+        path: "/bot-authorize", // temporary till sim7k wakes his ass up
+        component: () => import("@/pages/auth/discord-login.vue")
       }
     ]
   }
