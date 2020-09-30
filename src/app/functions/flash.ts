@@ -16,3 +16,11 @@ export const clearFlash = () => {
 export const hasFlash = () => {
   return !arrayEmpty(store.getters("getFlashMessages"))
 }
+
+export const flashError = (state: any, localized: any) => {
+  return flashOneMessage({
+    title: `Došlo k chybě (State: ${state ?? "unknown"})`,
+    message: localized ?? "Neznámá chyba. Prosím zkuste to později.",
+    type: "danger"
+  })
+}

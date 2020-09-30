@@ -1,9 +1,5 @@
 <template>
   <form @submit.prevent="submit">
-    <div class="field" v-if="formErrors.processing !== null">
-      <div class="notification is-danger">{{ formErrors.processing }}</div>
-    </div>
-
     <div class="field" :class="{ 'is-danger': formErrors.title !== null }">
       <label class="label is-size-4">Otázka</label>
       <input
@@ -68,6 +64,7 @@ import Vue from "vue"
 import PollAnswer from "./PollAnswer.vue"
 import ChannelPicker, { Channel } from "../ChannelPicker.vue"
 import { CombinedVueInstance } from "vue/types/vue"
+import { flashError, clearFlash, flashOneMessage } from "@/app/functions/flash"
 
 export default Vue.extend({
   components: {
@@ -92,7 +89,6 @@ export default Vue.extend({
     formErrors: {
       title: null,
       channel: null,
-      processing: null,
     } as { [key: string]: string | null },
   }),
   mounted() {
@@ -100,6 +96,8 @@ export default Vue.extend({
   },
   methods: {
     async submit() {
+      clearFlash()
+
       const validate = this.validate()
       if (!validate) return
 
@@ -118,9 +116,18 @@ export default Vue.extend({
             channel: this.channel!.id,
           },
         })
+
+        flashOneMessage({
+          type: "success",
+          title: "Úspěch!",
+          message: "Hlasování bylo úspěšně odesláno!",
+        })
       } catch (e) {
         console.log(e)
-        this.formErrors.processing = `Nastalo k chybě při zpracovávání požadavku. Chyba: ${e.message}`
+        flashError(
+          e.isAxiosError ? e.response.data.state : "exception",
+          e.isAxiosError ? e.response.data.localized : e.message
+        )
       }
       this.formLoading = false
     },

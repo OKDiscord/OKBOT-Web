@@ -2,52 +2,53 @@
   <div>
     <InlineLoader v-if="loading" />
     <div v-else-if="!loading && !error">
-        <h1>stuff</h1>
+      <h1>stuff</h1>
     </div>
 
     <div v-if="error" class="mb-4">
-      <router-link to="/login" class="button is-primary is-medium">Zpět k přihlášení</router-link>
+      <div class="buttons is-centered">
+        <LoginWithDiscordButton />
+        <router-link to="/login" class="button is-primary is-medium">Zpět k přihlášení</router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { clearFlash, flashOneMessage } from "@/app/functions/flash"
+import { clearFlash, flashOneMessage, flashError } from "@/app/functions/flash"
 import { objectEmpty } from "@/app/functions/misc"
 import InlineLoader from "@/components/global/InlineLoader.vue"
+import LoginWithDiscordButton from "@/components/login/LoginWithDiscordButton.vue"
 
 import Vue from "vue"
+import { AxiosResponse } from "axios"
 export default Vue.extend({
   components: {
     InlineLoader,
+    LoginWithDiscordButton,
   },
   data: () => ({
     loading: false,
-    error: false
+    error: false,
   }),
   mounted() {
     const { query } = this.$route
+
     if (objectEmpty(query)) return this.$router.push("/login")
 
-    clearFlash()
     this.loading = true
 
     if (query.hasOwnProperty("error")) {
       this.loading = false
       this.error = true
-      return flashOneMessage({
-        type: "danger",
-        title: `Chyba (${query.error})`,
-        message: `Došlo k chybě při přihlašování k Discordu. Chyba: ${
-          query.error_description ?? "neznámá"
-        }`,
-      })
+      return flashError(query.error, query.error_description)
     }
 
     if (!query.hasOwnProperty("code")) {
       this.loading = false
-      return this.$router.push('/login')
+      return this.$router.push("/login")
     }
+
     setTimeout(async () => {
       try {
         const response = await this.$axios.request({
@@ -57,25 +58,25 @@ export default Vue.extend({
             code: query.code,
           },
         })
-        if (!response.data.success) {
-          this.loading = false
-          return flashOneMessage({
-            type: "danger",
-            title: `Došlo k chybě (State: ${response.data.state})`,
-            message: response.data.localized || "Žádný popis chyby",
-          })
-        }
+
+        // @ts-ignore
+        if (!response.data.success) this.handleError(response)
 
         // TODO: do stuff
       } catch (e) {
-        this.loading = false
-        flashOneMessage({
-          type: "danger",
-          title: "Došlo k chybě",
-          message: `Došlo k chybě při ověřování OAuth code. Chyba: ${e.message}`,
-        })
+        if (!e.isAxiosError) return flashError(null, null)
+
+        // @ts-ignore
+        this.handleError(e.response)
       }
     }, Math.random() * 600)
+  },
+  methods: {
+    handleError(response: AxiosResponse<any>) {
+      this.loading = false
+      this.error = true
+      return flashError(response.data.state, response.data.localized)
+    },
   },
 })
 </script>

@@ -5,16 +5,16 @@ Vue.use(Vuex)
 
 export type FlashMessage = {
   title: string
-  message: string
+  message: string | string[]
   type: "danger" | "info" | "success" | "warning"
 }
 
 const state = () => ({
-  flashMessages: [] as FlashMessage[],
+  flashMessages: [] as FlashMessage[]
 })
 
 const getters: GetterTree<AppState, AppState> = {
-  getFlashMessages: state => state.flashMessages,
+  getFlashMessages: state => state.flashMessages
 }
 
 const actions: ActionTree<AppState, AppState> = {
@@ -26,7 +26,7 @@ const actions: ActionTree<AppState, AppState> = {
   },
   clearFlash: ({ commit }) => {
     commit("clearFlash")
-  },
+  }
 }
 
 const mutations: MutationTree<AppState> = {
@@ -38,7 +38,7 @@ const mutations: MutationTree<AppState> = {
   },
   clearFlash: state => {
     return (state.flashMessages = [])
-  },
+  }
 }
 
 const modules = {}
@@ -49,5 +49,5 @@ export default new Vuex.Store({
   state,
   actions,
   mutations,
-  modules,
+  modules
 })
