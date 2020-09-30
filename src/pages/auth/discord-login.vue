@@ -1,8 +1,12 @@
 <template>
   <div>
     <InlineLoader v-if="loading" />
-    <div v-else>
+    <div v-else-if="!loading && !error">
         <h1>stuff</h1>
+    </div>
+
+    <div v-if="error" class="mb-4">
+      <router-link to="/login" class="button is-primary is-medium">Zpět k přihlášení</router-link>
     </div>
   </div>
 </template>
@@ -19,16 +23,18 @@ export default Vue.extend({
   },
   data: () => ({
     loading: false,
+    error: false
   }),
   mounted() {
     const { query } = this.$route
-    if (objectEmpty(query)) return (this.loading = false)
+    if (objectEmpty(query)) return this.$router.push("/login")
 
     clearFlash()
     this.loading = true
 
     if (query.hasOwnProperty("error")) {
       this.loading = false
+      this.error = true
       return flashOneMessage({
         type: "danger",
         title: `Chyba (${query.error})`,
@@ -40,11 +46,7 @@ export default Vue.extend({
 
     if (!query.hasOwnProperty("code")) {
       this.loading = false
-      return flashOneMessage({
-        type: "danger",
-        title: `Chyba (ok_internal_missing_code)`,
-        message: "Došlo k chybě při přihlašování k Discordu. Chyba: neznámá",
-      })
+      return this.$router.push('/login')
     }
     setTimeout(async () => {
       try {
